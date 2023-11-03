@@ -3,7 +3,7 @@ import requests
 
 st.image('DocuAI.png')
 
-selected_tab = st.sidebar.selectbox("Select a tab:", ["Try", "Docs"])
+selected_tab = st.sidebar.selectbox("Select a tab:", ["Try", "Docs"]
 
 if selected_tab == "Try":
     try:
@@ -61,9 +61,38 @@ elif selected_tab == "Docs":
     st.image('pdf_qna.png')
 
 
+config = {
+    'user': 'bigdata',
+    'password': '#8r5BB9LBp&Nk-dN',
+    'host': 'causal-prism-404015:us-east1:bigdata',  # Use the Cloud SQL instance connection name    'database': 'bigdata',
+    'unix_socket': '/cloudsql/causal-prism-404015:us-east1:bigdata',
+}
 
+# Connect to the database
+connection = mysql.connector.connect(**config)
 
+# Function to create a connection using the config details
+@st.experimental_singleton
+def create_connection():
+    connection = None
+    try:
+        connection = mysql.connector.connect(**config)
+        if connection.is_connected():
+            db_Info = connection.get_server_info()
+            st.write(f"Connected to MySQL Server version {db_Info}")
+    except Error as e:
+        st.error(f"Error while connecting to MySQL: {e}")
+    return connection
 
+# Function to close the connection
+def close_connection(connection):
+    if connection.is_connected():
+        connection.close()
+        st.write("MySQL connection is closed")
+
+# Using the connection in Streamlit
+if 'db_connection' not in st.session_state:
+    st.session_state['db_connection'] = create_connection()
 
 
 
