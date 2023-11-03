@@ -1,0 +1,50 @@
+[2023-11-03T01:41:58.387+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: pinecone_data_pipeline_with_params.load_csv_into_pinecone manual__2023-11-03T01:40:38+00:00 [queued]>
+[2023-11-03T01:41:58.393+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: pinecone_data_pipeline_with_params.load_csv_into_pinecone manual__2023-11-03T01:40:38+00:00 [queued]>
+[2023-11-03T01:41:58.394+0000] {taskinstance.py:1361} INFO - Starting attempt 2 of 2
+[2023-11-03T01:41:58.404+0000] {taskinstance.py:1382} INFO - Executing <Task(PythonOperator): load_csv_into_pinecone> on 2023-11-03 01:40:38+00:00
+[2023-11-03T01:41:58.410+0000] {standard_task_runner.py:57} INFO - Started process 1275 to run task
+[2023-11-03T01:41:58.414+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'pinecone_data_pipeline_with_params', 'load_csv_into_pinecone', 'manual__2023-11-03T01:40:38+00:00', '--job-id', '81', '--raw', '--subdir', 'DAGS_FOLDER/sandbox.py', '--cfg-path', '/tmp/tmpqmb4_103']
+[2023-11-03T01:41:58.418+0000] {standard_task_runner.py:85} INFO - Job 81: Subtask load_csv_into_pinecone
+[2023-11-03T01:41:58.466+0000] {task_command.py:416} INFO - Running <TaskInstance: pinecone_data_pipeline_with_params.load_csv_into_pinecone manual__2023-11-03T01:40:38+00:00 [running]> on host f075beee9797
+[2023-11-03T01:41:58.522+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='pinecone_data_pipeline_with_params' AIRFLOW_CTX_TASK_ID='load_csv_into_pinecone' AIRFLOW_CTX_EXECUTION_DATE='2023-11-03T01:40:38+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='manual__2023-11-03T01:40:38+00:00'
+[2023-11-03T01:41:58.760+0000] {taskinstance.py:1937} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 192, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 209, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/sandbox.py", line 47, in load_csv_into_pinecone
+    index = pinecone.create_index(index_name,dimension=1536, metric="euclidean")
+  File "/home/airflow/.local/lib/python3.8/site-packages/pinecone/manage.py", line 118, in create_index
+    api_instance.create_index(create_request=CreateRequest(
+  File "/home/airflow/.local/lib/python3.8/site-packages/pinecone/core/client/api_client.py", line 776, in __call__
+    return self.callable(self, *args, **kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/pinecone/core/client/api/index_operations_api.py", line 368, in __create_index
+    return self.call_with_http_info(**kwargs)
+  File "/home/airflow/.local/lib/python3.8/site-packages/pinecone/core/client/api_client.py", line 838, in call_with_http_info
+    return self.api_client.call_api(
+  File "/home/airflow/.local/lib/python3.8/site-packages/pinecone/core/client/api_client.py", line 413, in call_api
+    return self.__call_api(resource_path, method,
+  File "/home/airflow/.local/lib/python3.8/site-packages/pinecone/core/client/api_client.py", line 207, in __call_api
+    raise e
+  File "/home/airflow/.local/lib/python3.8/site-packages/pinecone/core/client/api_client.py", line 200, in __call_api
+    response_data = self.request(
+  File "/home/airflow/.local/lib/python3.8/site-packages/pinecone/core/client/api_client.py", line 459, in request
+    return self.rest_client.POST(url,
+  File "/home/airflow/.local/lib/python3.8/site-packages/pinecone/core/client/rest.py", line 271, in POST
+    return self.request("POST", url,
+  File "/home/airflow/.local/lib/python3.8/site-packages/pinecone/core/client/rest.py", line 230, in request
+    raise ApiException(http_resp=r)
+pinecone.core.client.exceptions.ApiException: (400)
+Reason: Bad Request
+HTTP response headers: HTTPHeaderDict({'content-type': 'text/plain; charset=utf-8', 'Content-Length': '140', 'date': 'Fri, 03 Nov 2023 01:41:58 GMT', 'x-envoy-upstream-service-time': '3', 'server': 'envoy', 'Via': '1.1 google', 'Alt-Svc': 'h3=":443"; ma=2592000,h3-29=":443"; ma=2592000'})
+HTTP response body: Capacity Reached. Starter Projects support a single index. Create a new project to add more. Your Starter Project remains free post-upgrade.
+
+[2023-11-03T01:41:58.772+0000] {taskinstance.py:1400} INFO - Marking task as FAILED. dag_id=pinecone_data_pipeline_with_params, task_id=load_csv_into_pinecone, execution_date=20231103T014038, start_date=20231103T014158, end_date=20231103T014158
+[2023-11-03T01:41:58.783+0000] {standard_task_runner.py:104} ERROR - Failed to execute job 81 for task load_csv_into_pinecone ((400)
+Reason: Bad Request
+HTTP response headers: HTTPHeaderDict({'content-type': 'text/plain; charset=utf-8', 'Content-Length': '140', 'date': 'Fri, 03 Nov 2023 01:41:58 GMT', 'x-envoy-upstream-service-time': '3', 'server': 'envoy', 'Via': '1.1 google', 'Alt-Svc': 'h3=":443"; ma=2592000,h3-29=":443"; ma=2592000'})
+HTTP response body: Capacity Reached. Starter Projects support a single index. Create a new project to add more. Your Starter Project remains free post-upgrade.
+; 1275)
+[2023-11-03T01:41:58.800+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 1
+[2023-11-03T01:41:58.817+0000] {taskinstance.py:2778} INFO - 0 downstream tasks scheduled from follow-on schedule check
