@@ -1,0 +1,38 @@
+[2023-11-02T23:54:47.158+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: pinecone_data_pipeline_with_params.load_csv_into_pinecone manual__2023-11-02T23:54:38+00:00 [queued]>
+[2023-11-02T23:54:47.164+0000] {taskinstance.py:1159} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: pinecone_data_pipeline_with_params.load_csv_into_pinecone manual__2023-11-02T23:54:38+00:00 [queued]>
+[2023-11-02T23:54:47.165+0000] {taskinstance.py:1361} INFO - Starting attempt 1 of 2
+[2023-11-02T23:54:47.174+0000] {taskinstance.py:1382} INFO - Executing <Task(PythonOperator): load_csv_into_pinecone> on 2023-11-02 23:54:38+00:00
+[2023-11-02T23:54:47.179+0000] {standard_task_runner.py:57} INFO - Started process 620 to run task
+[2023-11-02T23:54:47.182+0000] {standard_task_runner.py:84} INFO - Running: ['***', 'tasks', 'run', 'pinecone_data_pipeline_with_params', 'load_csv_into_pinecone', 'manual__2023-11-02T23:54:38+00:00', '--job-id', '62', '--raw', '--subdir', 'DAGS_FOLDER/sandbox.py', '--cfg-path', '/tmp/tmpg9ru__yi']
+[2023-11-02T23:54:47.186+0000] {standard_task_runner.py:85} INFO - Job 62: Subtask load_csv_into_pinecone
+[2023-11-02T23:54:47.240+0000] {task_command.py:416} INFO - Running <TaskInstance: pinecone_data_pipeline_with_params.load_csv_into_pinecone manual__2023-11-02T23:54:38+00:00 [running]> on host cdf939224839
+[2023-11-02T23:54:47.288+0000] {taskinstance.py:1662} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='pinecone_data_pipeline_with_params' AIRFLOW_CTX_TASK_ID='load_csv_into_pinecone' AIRFLOW_CTX_EXECUTION_DATE='2023-11-02T23:54:38+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2023-11-02T23:54:38+00:00'
+[2023-11-02T23:54:47.463+0000] {taskinstance.py:1937} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 192, in execute
+    return_value = self.execute_callable()
+  File "/home/airflow/.local/lib/python3.8/site-packages/airflow/operators/python.py", line 209, in execute_callable
+    return self.python_callable(*self.op_args, **self.op_kwargs)
+  File "/opt/airflow/dags/sandbox.py", line 51, in load_csv_into_pinecone
+    upsert_requests = df.apply(row_to_upsert_request, axis=1).tolist()
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/core/frame.py", line 9423, in apply
+    return op.apply().__finalize__(self, method="apply")
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/core/apply.py", line 678, in apply
+    return self.apply_standard()
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/core/apply.py", line 798, in apply_standard
+    results, res_index = self.apply_series_generator()
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/core/apply.py", line 814, in apply_series_generator
+    results[i] = self.f(v)
+  File "/opt/airflow/dags/sandbox.py", line 46, in row_to_upsert_request
+    metadata = {field: row[field] for field in metadata_fields if field in row}
+  File "/opt/airflow/dags/sandbox.py", line 46, in <dictcomp>
+    metadata = {field: row[field] for field in metadata_fields if field in row}
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/core/generic.py", line 1927, in __contains__
+    return key in self._info_axis
+  File "/home/airflow/.local/lib/python3.8/site-packages/pandas/core/indexes/base.py", line 5144, in __contains__
+    hash(key)
+TypeError: unhashable type: 'dict'
+[2023-11-02T23:54:47.477+0000] {taskinstance.py:1400} INFO - Marking task as UP_FOR_RETRY. dag_id=pinecone_data_pipeline_with_params, task_id=load_csv_into_pinecone, execution_date=20231102T235438, start_date=20231102T235447, end_date=20231102T235447
+[2023-11-02T23:54:47.488+0000] {standard_task_runner.py:104} ERROR - Failed to execute job 62 for task load_csv_into_pinecone (unhashable type: 'dict'; 620)
+[2023-11-02T23:54:47.534+0000] {local_task_job_runner.py:228} INFO - Task exited with return code 1
+[2023-11-02T23:54:47.553+0000] {taskinstance.py:2778} INFO - 0 downstream tasks scheduled from follow-on schedule check
